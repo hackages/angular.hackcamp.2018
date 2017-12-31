@@ -7,7 +7,18 @@ import {Book} from '../types/book';
 
 @Component({
   selector: 'bs-book-search',
-  templateUrl: 'book-search.template.html',
+  template: `
+  <div id="search-component">
+    <h4>Search in your library</h4>
+    <input id="search-box" #searchInput (input)="this.term$.next(searchInput.value)"/>
+    <div>
+      <div *ngFor="let book of books$ | async"
+          (click)="gotoDetail(book)" class="search-result">
+          {{book.title}}
+      </div>
+    </div>
+  </div>
+  `,
   styleUrls: ['book-search.component.css'],
   providers: [SearchService]
 })
@@ -15,8 +26,10 @@ export class BookSearchComponent implements OnInit {
   term$: Subject<string> = new Subject<string>()
   books$: Observable<Book[]>;
 
-  constructor(private searchService: SearchService) {
-  }
+  constructor(
+    private searchService: SearchService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.books$ =
@@ -25,5 +38,6 @@ export class BookSearchComponent implements OnInit {
 
   gotoDetail(book: Book): void {
     // The router service will help here
+    // this.router.navigate([''])
   }
 }

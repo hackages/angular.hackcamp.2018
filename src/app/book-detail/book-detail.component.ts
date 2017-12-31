@@ -9,7 +9,20 @@ import {Book} from '../types/book';
 @Component({
   selector: 'bs-book-detail',
   styleUrls: ['book-detail.component.css'],
-  templateUrl: 'book-detail.template.html'
+  template: `
+  <div *ngIf="book">
+    <h2>{{book.title}} details!</h2>
+    <div>
+      <label>Id: </label>{{book.id}}
+    </div>
+    <div>
+      <label>Title: </label>
+      <input [(ngModel)]="book.title" placeholder="title"/>
+    </div>
+    <button (click)="goBack()">Back</button>
+    <button (click)="save()">Save</button>
+  </div>
+  `,
 })
 export class BookDetailComponent implements OnInit {
   book: Book;
