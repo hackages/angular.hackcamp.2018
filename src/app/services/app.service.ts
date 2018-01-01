@@ -8,15 +8,11 @@ export class AppService {
   bookApiUrl: string = 'app/books';
   private headers = new Headers({'Content-Type': 'application/json'});
 
-  constructor(private http:Http) {
-  }
+  constructor(private http:Http) {}
 
   getBooks(): Observable<Book[]> {
-    
     return this.http.get(this.bookApiUrl)
       .map((res: Response)=> res.json().data as Book[]);
-    
-    //throw new Error('Oops. Not yet implemented...');
   }
 
   getBook(id: number): Observable<Book> {

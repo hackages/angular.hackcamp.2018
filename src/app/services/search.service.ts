@@ -6,11 +6,9 @@ import 'rxjs/add/operator/switchMap'
 
 @Injectable()
 export class SearchService {
-  constructor(private http: Http) {
-  }
+  constructor(private http: Http) {}
 
   search(term: Observable<string>): Observable<Book[]> {
-    
     return this.raw_search(term);
   }
 
@@ -23,8 +21,7 @@ export class SearchService {
       .switchMap((term: string)=>
         term ? this.http.get(url+term)
           .map((res: Response) => res.json().data as Book[]) :
-          Observable.of([]))
-          .catch((err: Error) => Observable.of<Book[]>([]))
-
+          Observable.of<Book[]>([]))
+          .catch((err: Error) => Observable.of<Book[]>([]));
   }
 }
